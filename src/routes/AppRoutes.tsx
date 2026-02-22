@@ -1,18 +1,48 @@
 import { Routes, Route } from "react-router-dom";
 import StudentRoutes from "./StudentRoutes";
+import AdminRoutes from "./AdminRoutes";
 import Login from "../pages/Login";
-import AdminDashboard from "../pages/AdminDashboard";
 import ReviewerDashboard from "../pages/ReviewerDashboard";
+import ProtectedRoute from "../components/ProtectedRoute";
 
 const AppRoutes = () => {
   return (
     <Routes>
+      {/* Login Route */}
       <Route path="/" element={<Login />} />
-      <Route path="/student/*" element={<StudentRoutes />} />
-      <Route path="/admin" element={<AdminDashboard />} />
-      <Route path="/reviewer" element={<ReviewerDashboard />} />
-    </Routes>
-  )
-}
+      <Route path="/login" element={<Login />} />
 
-export default AppRoutes
+      {/* Student Module */}
+      <Route
+        path="/student/*"
+        element={
+          <ProtectedRoute allowedRole="student">
+            <StudentRoutes />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Admin Module */}
+      <Route
+        path="/admin/*"
+        element={
+          <ProtectedRoute allowedRole="admin">
+            <AdminRoutes />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Reviewer */}
+      <Route
+        path="/reviewer"
+        element={
+          <ProtectedRoute allowedRole="reviewer">
+            <ReviewerDashboard />
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
+  );
+};
+
+export default AppRoutes;

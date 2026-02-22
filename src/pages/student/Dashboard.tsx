@@ -4,6 +4,50 @@ import RecentResultsTable from "../../components/dashboard/RecentResultsTable";
 import GrievanceOverview from "../../components/dashboard/GrievanceOverview";
 
 const Dashboard = () => {
+  const exams = [
+    {
+      id: "1",
+      title: "Database Management Systems",
+      duration: 90,
+      marks: 100,
+      status: "available",
+    },
+    {
+      id: "2",
+      title: "Operating Systems",
+      duration: 120,
+      marks: 100,
+      status: "available",
+    },
+    {
+      id: "3",
+      title: "Computer Networks",
+      duration: 90,
+      marks: 100,
+      status: "completed",
+    },
+    {
+      id: "4",
+      title: "Software Engineering",
+      duration: 90,
+      marks: 100,
+      status: "locked",
+    },
+    {
+      id: "5",
+      title: "Web Technologies",
+      duration: 90,
+      marks: 100,
+      status: "available",
+    },
+    {
+      id: "6",
+      title: "Machine Learning",
+      duration: 120,
+      marks: 100,
+      status: "locked",
+    },
+  ];
   return (
     <div className="space-y-8">
       {/* Welcome Section */}
@@ -27,12 +71,9 @@ const Dashboard = () => {
                         sm:grid-cols-2 
                         xl:grid-cols-3"
         >
-          <ExamCard />
-          <ExamCard title="Operating Systems" duration="120 mins" />
-          <ExamCard title="Computer Networks" status="completed" />
-          <ExamCard title="Software Engineering" status="locked" />
-          <ExamCard title="Web Technologies" />
-          <ExamCard title="Machine Learning" status="locked" />
+          {exams.map((exam) => (
+            <ExamCard key={exam.id} exam={exam} />
+          ))}
         </div>
       </div>
 

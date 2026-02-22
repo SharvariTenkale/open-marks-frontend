@@ -58,12 +58,12 @@ const Sidebar = ({
               label="Dashboard"
               collapsed={isCollapsed}
             />
-            <NavItem
-              to="/student/my-exams"
+            {/* <NavItem
+              to="/student"
               icon={<FileText size={20} />}
               label="My Exams"
               collapsed={isCollapsed}
-            />
+            /> */}
             <NavItem
               to="/student/results"
               icon={<Award size={20} />}

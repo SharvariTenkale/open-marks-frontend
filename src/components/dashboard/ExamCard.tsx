@@ -1,25 +1,31 @@
 import { Clock, BookOpen } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-interface ExamCardProps {
-  title?: string;
-  duration?: string;
-  marks?: string;
-  status?: "available" | "locked" | "completed";
+// interface ExamCardProps {
+//   title?: string;
+//   duration?: string;
+//   marks?: string;
+//   status?: "available" | "locked" | "completed";
+// }
+interface Exam {
+  id: string;
+  title: string;
+  duration: number;
+  marks: number;
+  status: string;
 }
 
-const ExamCard = ({
-  title = "Database Management Systems",
-  duration = "90 mins",
-  marks = "100 marks",
-  status = "available",
-}: ExamCardProps) => {
+interface Props {
+  exam: Exam;
+}
+const ExamCard = ({ exam }: Props) => {
+  const navigate = useNavigate();
+
+  const { id, title, duration, marks, status } = exam;
   return (
     <div className="bg-white rounded-xl border p-5 shadow-sm space-y-4">
-
       <div className="flex justify-between items-start">
-        <h4 className="font-semibold text-gray-800">
-          {title}
-        </h4>
+        <h4 className="font-semibold text-gray-800">{title}</h4>
 
         {status === "available" && (
           <span className="text-green-600 bg-green-100 px-3 py-1 rounded-full text-xs font-medium">
@@ -43,17 +49,20 @@ const ExamCard = ({
       <div className="flex items-center gap-6 text-sm text-gray-600">
         <div className="flex items-center gap-2">
           <Clock size={16} />
-          <span>{duration}</span>
+          <span>{duration} mins</span>
         </div>
 
         <div className="flex items-center gap-2">
           <BookOpen size={16} />
-          <span>{marks}</span>
+          <span>{marks} marks</span>
         </div>
       </div>
 
       {status === "available" && (
-        <button className="w-full bg-blue-800 text-white py-2 rounded-lg font-medium hover:bg-blue-900 transition">
+        <button
+          onClick={() => navigate(`/student/my-exams/${id}`)}
+          className="w-full bg-blue-800 text-white py-2 rounded-lg font-medium hover:bg-blue-900 transition"
+        >
           Start Exam
         </button>
       )}
