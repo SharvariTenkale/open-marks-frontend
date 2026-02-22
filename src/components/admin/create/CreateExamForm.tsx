@@ -34,9 +34,7 @@ const CreateExamForm = () => {
 
       const examId = res.exam.id;
 
-      navigate("/admin/exams/questions", {
-        state: { fromCreateExam: true, examId },
-      });
+      navigate(`/admin/exams/${examId}/questions`);
     } catch (err: any) {
       setError(err?.response?.data?.message || "Something went wrong");
     } finally {

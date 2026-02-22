@@ -16,10 +16,18 @@ const ExamRow = ({ exam }: any) => {
           {exam.title}
         </td>
 
-        <td>{exam.subject}</td>
-        <td>{exam.total_marks}</td>
+        {/* <td>{exam.subject}</td>
+        <td>{exam.total_marks}</td> */}
         <td>{new Date(exam.scheduled_start).toLocaleString()}</td>
-        <td>{exam.duration} min</td>
+        {/* <td>{exam.duration} min</td> */}
+        <td>
+          {Math.round(
+            (new Date(exam.scheduled_end).getTime() -
+              new Date(exam.scheduled_start).getTime()) /
+              60000,
+          )}{" "}
+          min
+        </td>
         <td>
           <StatusBadge status={exam.status} />
         </td>

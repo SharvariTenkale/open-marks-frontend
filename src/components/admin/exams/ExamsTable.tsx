@@ -9,24 +9,7 @@ interface Props {
 
 const ExamsTable = ({ exams }: Props) => {
   // Real state for backend data
-  const [backendExams, setBackendExams] = useState<any[]>([]);
-
-  useEffect(() => {
-    const fetchExams = async () => {
-      try {
-        const data = await getExams();
-        console.log("Fetched Exams:", data);
-        setBackendExams(data);
-      } catch (error) {
-        console.error("Failed to fetch exams:", error);
-      }
-    };
-
-    fetchExams();
-  }, []);
-
-  // Use backend exams if available, else fallback to prop exams
-  const displayExams = backendExams.length > 0 ? backendExams : exams;
+  const displayExams = exams;
 
   return (
     <div className="bg-white rounded-xl shadow-sm">
@@ -36,8 +19,8 @@ const ExamsTable = ({ exams }: Props) => {
           <thead className="border-b bg-gray-50 text-gray-600">
             <tr>
               <th className="p-4 text-left">Exam Name</th>
-              <th>Subject</th>
-              <th>Total Marks</th>
+              {/* <th>Subject</th> */}
+              {/* <th>Total Marks</th> */}
               <th>Scheduled Date & Time</th>
               <th>Duration</th>
               <th>Status</th>

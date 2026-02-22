@@ -3,6 +3,9 @@ import ExamCard from "../../components/dashboard/ExamCard";
 import RecentResultsTable from "../../components/dashboard/RecentResultsTable";
 import GrievanceOverview from "../../components/dashboard/GrievanceOverview";
 
+import { useEffect, useState } from "react";
+import { getStudentExams } from "../../api/student/dashboard.api";
+
 const Dashboard = () => {
   const exams = [
     {

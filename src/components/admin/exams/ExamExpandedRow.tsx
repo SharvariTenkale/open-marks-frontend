@@ -5,12 +5,12 @@ const ExamExpandedRow = ({ exam }: any) => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <div>
             <p className="text-gray-500 text-sm">Number of Questions</p>
-            <p className="text-lg font-semibold">{exam.questions}</p>
+            <p className="text-lg font-semibold">0</p>
           </div>
 
           <div>
             <p className="text-gray-500 text-sm">Total Attempts</p>
-            <p className="text-lg font-semibold">{exam.attempts}</p>
+            <p className="text-lg font-semibold">0</p>
           </div>
 
           <div>

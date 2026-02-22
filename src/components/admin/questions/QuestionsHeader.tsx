@@ -4,7 +4,6 @@ import AddQuestionModal from "./modals/AddQuestionModal";
 
 const QuestionsHeader = () => {
   const [open, setOpen] = useState(false);
-
   return (
     <>
       <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
@@ -17,7 +16,10 @@ const QuestionsHeader = () => {
 
         <div className="flex items-center gap-3">
           <span className="text-sm">
-            Status: <span className="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-xs">Draft</span>
+            Status:{" "}
+            <span className="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-xs">
+              Draft
+            </span>
           </span>
 
           <button

@@ -7,6 +7,7 @@ import GrievanceManagement from "../pages/admin/GrievanceManagement";
 import CreateExam from "../pages/admin/CreateExam";
 import QuestionManagement from "../pages/admin/QuestionManagement";
 import GrievanceDetail from "../pages/admin/GrievanceDetail";
+import AuditLogs from "../pages/admin/AuditLogs";
 const AdminRoutes = () => {
   return (
     <Routes>
@@ -21,7 +22,12 @@ const AdminRoutes = () => {
       {/* Question Management */}
       <Route path="questions" element={<QuestionManagement />} />
       <Route path="exams/questions" element={<QuestionManagement />} />
+      <Route
+        path="/admin/exams/:examId/questions"
+        element={<QuestionManagement />}
+      />
       <Route path="grievances/:id" element={<GrievanceDetail />} />
+      <Route path="audit-logs" element={<AuditLogs />} />
       {/* Default Route */}
       <Route path="*" element={<AdminDashboard />} />
     </Routes>

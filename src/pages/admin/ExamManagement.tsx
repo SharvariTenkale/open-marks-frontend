@@ -15,10 +15,11 @@ const ExamManagement = () => {
     const fetchExams = async () => {
       try {
         const data = await getExams();
-        console.log("Fetched Exams:", data);
         setExams(data);
       } catch (error) {
         console.error("Failed to fetch exams:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -52,32 +53,3 @@ const ExamManagement = () => {
 export default ExamManagement;
 
 /* ---------------- Dummy Data ---------------- */
-
-const dummyExams = [
-  {
-    id: 1,
-    title: "Midterm Examination - Data Structures",
-    subject: "Computer Science",
-    total_marks: 100,
-    scheduled_start: "2026-03-01T10:00:00",
-    duration: 120,
-    status: "draft",
-    description:
-      "Comprehensive midterm covering arrays, linked lists, trees, and graphs",
-    questions: 0,
-    attempts: 0,
-  },
-  {
-    id: 2,
-    title: "Final Exam - Database Management",
-    subject: "Computer Science",
-    total_marks: 150,
-    scheduled_start: "2026-02-25T14:00:00",
-    duration: 180,
-    status: "scheduled",
-    description:
-      "Final examination covering SQL, normalization, and transactions",
-    questions: 45,
-    attempts: 0,
-  },
-];

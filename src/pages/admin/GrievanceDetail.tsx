@@ -7,9 +7,9 @@ import StudentInfoCard from "../../components/admin/grievances/detail/StudentInf
 import QuestionContextCard from "../../components/admin/grievances/detail/QuestionContextCard";
 import StudentGrievanceCard from "../../components/admin/grievances/detail/StudentGrievanceCard";
 // import ResolutionHistoryCard from "../../components/admin/grievances/detail/ResolutionHistoryCard";
-// import ResolutionPanel from "../../components/admin/grievances/detail/ResolutionPanel";
+import ResolutionPanel from "../../components/admin/grievances/detail/ResolutionPanel";
 
-const GrievanceDetail = () => {
+const GrievanceDetail = ({ role = "admin" }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   return (
@@ -38,7 +38,7 @@ const GrievanceDetail = () => {
 
             {/* Right Panel */}
             <div>
-              {/* <ResolutionPanel /> */}
+              <ResolutionPanel role="admin" />
             </div>
           </div>
         </main>

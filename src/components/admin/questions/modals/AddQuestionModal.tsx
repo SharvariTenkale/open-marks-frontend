@@ -1,7 +1,7 @@
 import QuestionForm from "./QuestionForm";
 import { X } from "lucide-react";
 
-const AddQuestionModal = ({ onClose }: any) => {
+const AddQuestionModal = ({ onClose, examId }: any) => {
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50">
       <div className="bg-white w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-xl p-6">

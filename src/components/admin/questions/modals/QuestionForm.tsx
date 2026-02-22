@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Plus, X } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { addQuestion } from "../../../../api/admin/question.api";
+import { useParams } from "react-router-dom";
 
 interface Props {
   mode: "add" | "edit";
@@ -10,8 +11,8 @@ interface Props {
 
 const QuestionForm = ({ mode, onClose }: Props) => {
   //api
-  const location = useLocation();
-  const examId = location.state?.examId;
+
+  const { examId } = useParams();
   console.log("Current Exam ID:", examId);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -50,65 +51,36 @@ const QuestionForm = ({ mode, onClose }: Props) => {
       setError("");
 
       if (!examId) {
-        setError("Exam ID missing");
+        setError("Exam ID is not available");
         return;
       }
 
-      let payload: any;
+      let payload;
 
       if (questionType === "MCQ") {
-        const validOptions = options.filter((o) => o.text.trim() !== "");
-
-        if (validOptions.length < 2) {
-          setError("At least 2 options required");
-          return;
-        }
-
-        const correctOption = validOptions.find((o) => o.correct);
-
-        if (!correctOption) {
-          setError("Select correct answer");
-          return;
-        }
-
         payload = {
           type: "mcq",
-          question_text: description.trim(),
-          options: validOptions.map((o) => o.text.trim()),
-          correct_answer: correctOption.text,
-          max_marks: Number(marks),
+          question_text: title,
+          options: options.map((o) => o.text),
+          correct_answer: options.find((o) => o.correct)?.text,
+          max_marks: marks,
         };
       } else {
-        const formattedKeyPoints = keywords
-          .filter((k) => k.word.trim() !== "")
-          .map((k) => ({
-            point: k.word.trim(),
-            marks: Number(k.marks),
-          }));
-
-        const totalMarks = formattedKeyPoints.reduce(
-          (sum, k) => sum + k.marks,
-          0,
-        );
-
-        if (totalMarks !== Number(marks)) {
-          setError("Keyword marks must equal total marks");
-          return;
-        }
-
         payload = {
           type: "descriptive",
-          question_text: description.trim(),
-          max_marks: Number(marks),
-          model_answer: modelAnswer.trim(),
-          key_points: formattedKeyPoints,
+          question_text: title,
+          max_marks: marks,
+          model_answer: modelAnswer,
+          key_points: keywords.map((k) => ({
+            point: k.word,
+            marks: Number(k.marks),
+          })),
         };
       }
 
-      const res = await addQuestion(examId, payload);
+      await addQuestion(examId, payload);
 
-      console.log("Added Question:", res);
-
+      alert("Question added successfully");
       onClose();
     } catch (err: any) {
       setError(err?.response?.data?.message || "Failed to add question");
@@ -116,6 +88,7 @@ const QuestionForm = ({ mode, onClose }: Props) => {
       setLoading(false);
     }
   };
+
   return (
     <div className="space-y-6">
       {/* Title */}
@@ -209,14 +182,12 @@ const QuestionForm = ({ mode, onClose }: Props) => {
               <input
                 type="text"
                 value={opt.text}
-                onChange={(e) =>
-                  setOptions(
-                    options.map((o) =>
-                      o.id === opt.id ? { ...o, text: e.target.value } : o,
-                    ),
-                  )
-                }
-                className="flex-1 border rounded-lg px-3 py-2 text-sm"
+                onChange={(e) => {
+                  const updated = options.map((o) =>
+                    o.id === opt.id ? { ...o, text: e.target.value } : o,
+                  );
+                  setOptions(updated);
+                }}
                 placeholder="Enter option text"
               />
 
@@ -233,7 +204,23 @@ const QuestionForm = ({ mode, onClose }: Props) => {
           </p>
         </div>
       )}
-
+      {options.map((opt, index) => (
+        <div key={opt.id}>
+          <input
+            type="radio"
+            name="correct"
+            checked={opt.correct}
+            onChange={() => {
+              const updated = options.map((o) => ({
+                ...o,
+                correct: o.id === opt.id,
+              }));
+              setOptions(updated);
+            }}
+          />
+          <input type="text" placeholder="Enter option text" />
+        </div>
+      ))}
       {/* DESCRIPTIVE SECTION */}
       {questionType === "Descriptive" && (
         <div className="space-y-6">
@@ -310,10 +297,9 @@ const QuestionForm = ({ mode, onClose }: Props) => {
 
         <button
           onClick={handleSubmit}
-          disabled={loading}
           className="bg-blue-700 text-white px-5 py-2 rounded-lg hover:bg-blue-800"
         >
-          {mode === "add" ? "Add Question" : "Update Question"}
+          Add Question
         </button>
       </div>
     </div>

@@ -41,3 +41,10 @@ export const getExams = async () => {
 
   return mappedExams;
 };
+export const startExam = async (examId: string) => {
+  const response = await axiosInstance.post(
+    `/api/exams/${examId}/start`
+  );
+
+  return response.data;
+};

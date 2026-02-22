@@ -1,12 +1,10 @@
 import axiosInstance from "../axios";
 
-export const addQuestion = async (
-  examId: string,
-  data: any
-) => {
+export const addQuestion = async (examId: string, payload: any) => {
   const response = await axiosInstance.post(
     `/api/exams/${examId}/questions`,
-    data
+    payload
   );
+
   return response.data;
 };

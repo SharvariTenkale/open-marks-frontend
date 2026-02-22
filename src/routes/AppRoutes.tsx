@@ -4,7 +4,7 @@ import AdminRoutes from "./AdminRoutes";
 import Login from "../pages/Login";
 import ReviewerDashboard from "../pages/ReviewerDashboard";
 import ProtectedRoute from "../components/ProtectedRoute";
-
+import ReviewerGrievanceDetail from "../pages/admin/GrievanceDetail";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -40,6 +40,10 @@ const AppRoutes = () => {
             <ReviewerDashboard />
           </ProtectedRoute>
         }
+      />
+      <Route
+        path="/reviewer/grievances/:id"
+        element={<ReviewerGrievanceDetail />}
       />
     </Routes>
   );

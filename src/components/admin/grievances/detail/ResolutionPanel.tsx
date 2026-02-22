@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { CheckCircle, XCircle } from "lucide-react";
 
-const ResolutionPanel = () => {
+interface Props {
+  role: "admin" | "reviewer";
+}
+
+const ResolutionPanel = ({ role }: Props) => {
   const [decision, setDecision] = useState<"approve" | "reject" | null>(null);
   const [confirmed, setConfirmed] = useState(false);
 
@@ -47,6 +51,19 @@ const ResolutionPanel = () => {
           placeholder="Provide a detailed explanation..."
         />
       </div>
+      {role === "reviewer" && (
+        <div>
+          <p className="text-sm text-gray-500 mb-2">Marks Adjustment</p>
+          <input
+            type="number"
+            className="w-full border rounded-lg p-3 text-sm focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter additional marks to award"
+          />
+          <p className="text-xs text-gray-500 mt-1">
+            Current marks: 6/10. Maximum additional marks: 4
+          </p>
+        </div>
+      )}
 
       {/* Confirm */}
       <div className="flex items-start gap-3 text-sm">
@@ -55,9 +72,7 @@ const ResolutionPanel = () => {
           checked={confirmed}
           onChange={() => setConfirmed(!confirmed)}
         />
-        <p>
-          I confirm this decision will be permanently recorded.
-        </p>
+        <p>I confirm this decision will be permanently recorded.</p>
       </div>
 
       <button

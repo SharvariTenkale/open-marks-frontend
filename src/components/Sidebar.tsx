@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   FileText,
@@ -9,6 +9,7 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
+  LogOut,
 } from "lucide-react";
 
 const Sidebar = ({
@@ -18,6 +19,11 @@ const Sidebar = ({
   isCollapsed: boolean;
   setIsCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
   return (
     <>
       <div
@@ -108,7 +114,20 @@ const Sidebar = ({
                 <p className="text-xs text-gray-500">STU-2024-001</p>
               </div>
             )}
+            
           </div>
+          <button
+            onClick={handleLogout}
+            className={`
+            flex items-center w-full
+            ${isCollapsed ? "justify-center" : "gap-3"}
+            px-3 py-2 rounded-lg
+            hover:bg-blue-700 transition
+          `}
+          >
+            <LogOut size={20} />
+            {!isCollapsed && <span className="text-sm">Logout</span>}
+          </button>
         </div>
       </div>
     </>

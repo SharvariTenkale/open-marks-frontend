@@ -6,7 +6,7 @@ import GrievanceFilters from "../../components/admin/grievances/GrievanceFilters
 import GrievanceStats from "../../components/admin/grievances/GrievanceStats";
 import GrievanceTable from "../../components/admin/grievances/GrievanceTable";
 
-const GrievanceManagement = () => {
+const GrievanceManagement = ({ role = "admin" }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   return (
